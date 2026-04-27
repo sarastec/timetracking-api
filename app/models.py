@@ -23,8 +23,8 @@ class User(Base):
     username = Column(String, nullable=False)
     email = Column(String, unique=True, nullable=False)
     password_hash = Column(String, nullable=False)
-    status_id = Column(Integer, ForeignKey("user_status_lookup.id"), index=True, nullable=False) # ADD DEFAULT ACTIVE LATER
-    subscription_id = Column(Integer, ForeignKey("subscriptions_lookup.id"), nullable=False) # ADD DEFAULT FREE LATER
+    status_id = Column(Integer, ForeignKey("user_status_lookup.id"), index=True, nullable=False, default=1)
+    subscription_id = Column(Integer, ForeignKey("subscriptions_lookup.id"), nullable=False, default=1)
     created_dt = Column(DateTime, nullable=False)
     modified_dt = Column(DateTime, nullable=True)
 
@@ -52,9 +52,9 @@ class Activity(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     name = Column(String, unique=True, nullable=False)
-    folder_id = Column(Integer, ForeignKey("folders.id"), index=True, nullable=True)
+    folder_id = Column(Integer, ForeignKey("folders.id"), nullable=True)
     user_id = Column(Integer, ForeignKey("users.id"), index=True, nullable=False)
-    status_id = Column(Integer, ForeignKey("activity_status_lookup.id")) # ADD DEFAULT ACTIVE LATER
+    status_id = Column(Integer, ForeignKey("activity_status_lookup.id"), index=True, nullable=False, default=1)
     created_dt = Column(DateTime, nullable=False)
     modified_dt = Column(DateTime, nullable=True)
 
