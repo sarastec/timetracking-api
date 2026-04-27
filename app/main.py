@@ -1,13 +1,12 @@
 from sqlalchemy.orm import Session
-from fastapi import FastAPI, Depends, HTTPException
+from fastapi import FastAPI, Depends
 from contextlib import asynccontextmanager
 
-from app.db import engine, Base, SessionLocal
+from app.db import engine, Base
 from app.seed import seed_lookup_tables
-from app.models import User, UserStatus, Subscription
-from app.schemas import UserCreate
-
-from datetime import datetime
+from app.deps import get_db
+from app.models import UserStatus
+from app.api.auth import routes as auth
 
 Base.metadata.create_all(bind=engine)
 
@@ -16,17 +15,9 @@ async def lifespan(app: FastAPI):
     # startup
     seed_lookup_tables()
     yield
-    # shutdown (na razie nic)
+    # shutdown
 
 app = FastAPI(lifespan=lifespan)
-
-
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
 
 
 @app.get("/")
@@ -37,3 +28,6 @@ def root(db: Session = Depends(get_db)):
         "message": "API działa",
         "user_statuses": [s.name for s in statuses]
     }
+
+
+app.include_router(auth.router)
