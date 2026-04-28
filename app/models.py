@@ -33,7 +33,7 @@ class Folder(Base):
     __tablename__ = "folders"
 
     id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, unique=True, nullable=False)
+    name = Column(String, nullable=False)
     parent_id = Column(Integer, ForeignKey("folders.id"), index=True, nullable=True)
     user_id = Column(Integer, ForeignKey("users.id"), index=True, nullable=False)
     created_dt = Column(DateTime, nullable=False)
