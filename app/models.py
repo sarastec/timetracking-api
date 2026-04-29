@@ -51,7 +51,7 @@ class Activity(Base):
     __tablename__ = "activities"
 
     id = Column(Integer, primary_key=True, index=True)
-    name = Column(String, unique=True, nullable=False)
+    name = Column(String, nullable=False)
     folder_id = Column(Integer, ForeignKey("folders.id"), nullable=True)
     user_id = Column(Integer, ForeignKey("users.id"), index=True, nullable=False)
     status_id = Column(Integer, ForeignKey("activity_status_lookup.id"), index=True, nullable=False, default=1)
