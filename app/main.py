@@ -7,6 +7,7 @@ from app.api.auth import routes as auth
 from app.api.folders import routes as folders
 from app.api.activities import routes as activities
 from app.api.structure import routes as structure
+from app.api.time_entries import routes as time_entries
 
 Base.metadata.create_all(bind=engine)
 
@@ -23,3 +24,4 @@ app.include_router(auth.router)
 app.include_router(folders.router)
 app.include_router(activities.router)
 app.include_router(structure.router)
+app.include_router(time_entries.router)
